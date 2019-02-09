@@ -1,20 +1,33 @@
 {
   "name": "bcrypt-test",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.0.1",
+  "description": "Demo webapp for bcrypt",
   "main": "index.js",
   "dependencies": {
-    "bcrypt": "^3.0.2",
-    "body-parser": "^1.18.2",
+    "bcrypt": "^3.0.4",
     "express": "^4.16.3",
-    "morgan": "^1.9.1",
-    "request": "^2.88.0"
+    "http-errors": "^1.7.1",
+    "morgan": "^1.9.1"
   },
   "devDependencies": {},
   "scripts": {
+    "dev": "node-dev app.js",
     "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC"
+  "author": "Amitosh Swain Mahapatra <amitosh.swain@gmail.com>",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/agathver/bcrypt-demo.git"
+  },
+  "keywords": [
+    "bcrypt",
+    "nodejs",
+    "express"
+  ],
+  "bugs": {
+    "url": "https://github.com/agathver/bcrypt-demo/issues"
+  },
+  "homepage": "https://github.com/agathver/bcrypt-demo#readme"
 }

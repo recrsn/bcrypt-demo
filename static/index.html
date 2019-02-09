@@ -1,21 +1,161 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>BCrypt Test</title>
-</head>
-<body>
-    <div>
-        <form id="form">
-            <input type="text" placeholder="Text" id="text" />
-            <button type="submit">Calculate</button>
-        </form>
-        <span id="hash">
-
-        </span>
-    </div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>BCrypt Demo</title>
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootswatch/4.2.1/flatly/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-9dACWymWSkhCeCgbjV6xqS20Luu4ue6QnEvr+nMXpPMwIq/OB89AoRh27Flsrxzs"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"
+      integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="d-flex flex-column">
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="mx-auto">
+          <a href="#" class="navbar-brand ml-auto mx-auto">BCrypt Demo</a>
+        </div>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-content="navbarContent"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div id="navbarContent" class="collapse navbar-collapse">
+          <div class="info ml-auto">
+            Using bcrypt version <span class="badge badge-info">v3.0.4</span>
+          </div>
+          <div class="source ml-2">
+            <a class="nav-link" href="https://github.com/agathver/bcrypt-demo">
+              <i class="fab fa-github"></i> Source
+            </a>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <main class="flex-grow-1">
+      <div id="accordion" class="container pt-5">
+        <div class="card form-card mx-auto">
+          <div class="card-header" id="encodeHeader">
+            <h5 class="mb-0">
+              <button
+                class="btn btn-link"
+                data-toggle="collapse"
+                data-target="#encode"
+                aria-expanded="true"
+                aria-controls="rncode"
+              >
+                Encode
+              </button>
+            </h5>
+          </div>
+          <div
+            id="encode"
+            class="card-body collapse show"
+            aria-labelledby="encodeHeader"
+            data-parent="#accordion"
+          >
+            <form id="encodeForm">
+              <div class="form-group">
+                <label for="plaintext">Plain text</label>
+                <input
+                  required
+                  class="form-control"
+                  type="text"
+                  placeholder="Text"
+                  id="plaintext"
+                  name="plaintext"
+                />
+              </div>
+              <div class="form-group">
+                  <label for="rounds">Rounds</label>
+                  <input id="rounds" type="number" class="form-control" name="rounds" value="13" max="32" min="1" />
+              </div>
+              <div class="form-group">
+                <button class="btn btn-primary" type="submit">Calculate</button>
+              </div>
+              <div id="encodeResult" class="form-group form-text">
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="card form-card mx-auto">
+          <div class="card-header" id="decodeHeader">
+            <h5 class="mb-0">
+              <button
+                class="btn btn-link"
+                data-toggle="collapse"
+                data-target="#decode"
+                aria-expanded="true"
+                aria-controls="#decode"
+              >
+                Decode
+              </button>
+            </h5>
+          </div>
+          <div
+            id="decode"
+            class="card-body collapse"
+            aria-labelledby="decodeHeader"
+            data-parent="#accordion"
+          >
+            <form id="decodeForm">
+              <div class="form-group">
+                <label for="plaintext">Plain text</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  placeholder="Text"
+                  id="text"
+                />
+              </div>
+              <div class="form-group">
+                <label for="plaintext">Hash</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  placeholder="Text"
+                  id="hash"
+                />
+              </div>
+              <div class="form-group">
+                <button class="btn btn-primary" type="submit">Verify</button>
+              </div>
+              <div class="form-group form-text">
+                <span id="verifyResult"></span>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+      integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+      integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+      crossorigin="anonymous"
+    ></script>
     <script src="js/script.js"></script>
-</body>
+  </body>
 </html>
