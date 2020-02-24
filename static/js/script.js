@@ -9,7 +9,7 @@ function htmlEscape(str) {
     .replace(/\//g, '&#x2F;');
 }
 
-const encodeResult = document.getElementById('encodeResult');
+const hashResult = document.getElementById('hashResult');
 const verifyResult = document.getElementById('verifyResult');
 
 const renderError = error => `<span class="text-danger">
@@ -27,23 +27,23 @@ const renderHash = response =>
 function renderCompare(response) {
   const res = response.result
     ? `<p class="text-success"><i class="fas fa-check"></i><span class="ml-1">Match</span><p>`
-    : `<p class="text-danger"><i class="fas fa-cross"></i><span class="ml-1">Does not match</span></p>`;
+    : `<p class="text-danger"><i class="fas fa-times"></i><span class="ml-1">Does not match</span></p>`;
 
   return `
     ${res}
     <div class="time text-muted"><i class="fa fa-clock"></i><small class="ml-1">${htmlEscape(
-      response.time
-    )} ms</small></div>`;
+    response.time
+  )} ms</small></div>`;
 }
 
-document.getElementById('encodeForm').addEventListener('submit', async e => {
+document.getElementById('hashForm').addEventListener('submit', async e => {
   e.preventDefault();
 
   const data = document.getElementById('plaintext').value;
   const rounds = parseInt(document.getElementById('rounds').value, 10);
 
   try {
-    const req = await fetch('/encode', {
+    const req = await fetch('/hash', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -56,23 +56,23 @@ document.getElementById('encodeForm').addEventListener('submit', async e => {
 
     const response = await req.json();
     if (req.ok) {
-      encodeResult.innerHTML = renderHash(response);
+      hashResult.innerHTML = renderHash(response);
     } else {
-      encodeResult.innerHTML = renderError(response.error);
+      hashResult.innerHTML = renderError(response.error);
     }
   } catch (error) {
-    encodeResult.innerHTML = renderError('An unexpected error occured');
+    hashResult.innerHTML = renderError('An unexpected error occured');
   }
 });
 
-document.getElementById('decodeForm').addEventListener('submit', async e => {
+document.getElementById('verifyForm').addEventListener('submit', async e => {
   e.preventDefault();
 
   const data = document.getElementById('text').value;
-  const hash = document.getElementById('hash').value;
+  const hash = document.getElementById('bcrypt-hash').value;
 
   try {
-    const req = await fetch('/decode', {
+    const req = await fetch('/verify', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

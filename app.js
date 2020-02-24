@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'static')));
 
-app.post('/encode', (req, res, next) => {
+app.post('/hash', (req, res, next) => {
   const data = req.body.data;
   let rounds = req.body.rounds;
 
@@ -46,7 +46,7 @@ app.post('/encode', (req, res, next) => {
     });
 });
 
-app.post('/decode', (req, res, next) => {
+app.post('/verify', (req, res, next) => {
   const { data, hash } = req.body;
 
   if (!data) {
@@ -71,7 +71,7 @@ app.post('/decode', (req, res, next) => {
     });
 });
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   return next(new NotFound());
 });
 
@@ -79,8 +79,8 @@ app.use((error, req, res, next) => {
   const status = error.status || 500;
   const message = status < 500 ? error.message : 'Internal server error';
 
-  if(status >= 500) {
-      console.error(error);
+  if (status >= 500) {
+    console.error(error);
   }
 
   res.status(status).json({ error: message });
